@@ -24,3 +24,21 @@ Optional:
 `ANTHROPIC_MODEL=claude-haiku-4-5`
 
 If Anthropic changes the alias or you want a specific pinned model version later, update `ANTHROPIC_MODEL` in Netlify instead of editing code.
+
+## 404 hard-fix note
+
+This build uses a root-level `functions/` directory and sets `[build] functions = "functions"` in `netlify.toml`.
+
+After deploying, test:
+
+`/.netlify/functions/ping`
+
+Expected result:
+
+`{"ok":true,"function":"ping","message":"Netlify Functions are deployed."}`
+
+Then test:
+
+`/.netlify/functions/sort`
+
+Expected result from a normal browser visit is `405 Method Not Allowed`, because sort only accepts POST requests.
